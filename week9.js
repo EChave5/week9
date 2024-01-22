@@ -1,25 +1,26 @@
 
 
 class Player {
-  constructor(name) {
-    this.name = name;
+  constructor(nameData) {
+    this.playerName = nameData;
+    this.playerPoints = 0;
+    this.playerHand = []; //push all the cards into hands using dealCards method
   }
 }
- let player1 = new Player;
- let player2 = new Player; 
+ 
 
 //creating the cards
 class Card {
-  constructor(suit, rank, value) {
-    this.suit = suit;
-    this.rank = rank;
-    this.value = value;
+  constructor(suitData, rankData, valueData) {
+    this.suit = suitData;
+    this.rank = rankData;
+    this.value = valueData;
   }
 }
 
 //creating the deck
 class Deck {
-  constructor(cards) {
+  constructor() {
     this.cards = [];
   }
 
@@ -44,9 +45,9 @@ class Deck {
             value = 14
             break;
           default:
-              score = (ranks[j]);
+            value = (ranks[j]);
         }
-        this.cards.push(new Card (suits[i], rank[j], value))
+        this.cards.push(new Card (suits[i], ranks[j], value))
       }
     }
   }
@@ -54,12 +55,12 @@ class Deck {
 
   shuffleDeck () { 
   for(let i = 0; i < this.cards.length; i++) {
-    let location1 = Math.floor((Math.random() * deck.length));
-    let location2 = Math.floor((Math.random() * deck.length));
-    let tmp = deck[location1];
+    let location1 = Math.floor((Math.random() * this.cards.length));
+    let location2 = Math.floor((Math.random() * this.cards.length));
+    let tmp = this.cards[location1];
 
-    deck[location1] = deck[location2];
-    deck[location2] = tmp;
+    this.cards[location1] = this.cards[location2];
+    this.cards[location2] = tmp;
   }
   }
 
@@ -74,23 +75,37 @@ dealCards() {
 }
 
 class Game {
-  constructor (points) {
-    this.points = points;
+  constructor () {
+    
+    this.gameDeck = [];
+    this.player1 = {};
+    this.player2 = {};
   }
-dealCard(deck) {
-  return deck.pop();
+dealCard() {
+  return this.gameDeck.cards.pop();
 }
 
+//method deals cards, compares cards, and earns points 
 playGame() {
-  for (let i = 0; i < this.cards.length; i++) {
-    player1.dealCard;
-    player2.dealCard;
+  this.player1 = new Player('Player 1');
+  this.player2 = new Player('Player 2'); 
+  console.log('Player 1', this.player1, 'Player 2', this.player2);
+  console.log('Creating Game Deck...');
+  this.gameDeck = new Deck(); //new deck class created
+  this.gameDeck.createDeck(); //deck created in order 
+  this.gameDeck.shuffleDeck(); //shuffles deck
+  console.log('Deck:', this.gameDeck);
+  for (let i = 0; i < this.gameDeck.cards.length; i++) {
+    console.log(i, 'Dealing Cards...', this.gameDeck.cards[i]);
+    this.player1.playerHand.push(this.dealCard(this.gameDeck.cards[i]));
+    this.player2.playerHand.push(this.dealCard(this.gameDeck.cards[i]));
   }
-  if (player1.card.value > player2.card.value) {
-    return (player1.points + 1) }
-  else if (player1.card.value < player2.card.value) {
-    return (player2.points + 1) }
-  else if (player1.card.value == player2.card.value) {
+  console.log(this.player1);
+  if (this.player1.card.value > this.player2.card.value) {
+    return (this.player1.points + 1) }
+  else if (this.player1.card.value < this.player2.card.value) {
+    return (this.player2.points + 1) }
+  else if (this.player1.card.value == this.player2.card.value) {
     return ("Tie");
    }
   }
@@ -113,7 +128,7 @@ let war = new Game;
 
 war.playGame();
 console.log(player1.points + " = Player 1");
-console.log(player2.points + ' = Player 2')
+console.log(player2.points + ' = Player 2');
 
 
 
